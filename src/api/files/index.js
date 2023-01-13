@@ -20,17 +20,16 @@ const cloudinaryUploader = multer({
 
 filesRouter.post("/:id/poster", cloudinaryUploader, async (req, res, next) => {
   try {
-    console.log(req.file);
-    const url = req.file.path;
+    console.log(`I cant't read ${req.file}`);
+
     const allMedia = await getMedia();
 
     const index = allMedia.findIndex((media) => media.imdbId === req.params.id);
     if (index !== -1) {
       const oldMedia = allMedia[index];
-      const mediaPoster = { ...oldMedia, poster: url };
+      const media = { ...oldMedia, poster: "url" };
       const updatedMedia = {
-        ...oldMedia,
-        mediaPoster,
+        media,
         updatedAt: new Date(),
       };
 
