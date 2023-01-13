@@ -22,7 +22,7 @@ const writeMedia = (mediaArray) =>
 mediaRouter.post("/", (req, res, next) => {
   try {
     console.log("REQUEST BODY: ", req.body);
-    const newMedia = { ...req.body, createdAt: new Date(), imdbId: uniqid() };
+    const newMedia = { ...req.body, imdbId: uniqid() };
     console.log("NEW MEDIA: ", newMedia);
     const mediaArray = JSON.parse(fs.readFileSync(mediaJSONPath));
     mediaArray.push(newMedia);
@@ -49,7 +49,7 @@ mediaRouter.get("/", (req, res, next) => {
 mediaRouter.get("/:id", (req, res, next) => {
   try {
     const allMedia = getMedia();
-    const media = allMedia.find((media) => media.id === req.params.id);
+    const media = allMedia.find((media) => media.imdbId === req.params.id);
     if (media) {
       res.send(media);
     } else {

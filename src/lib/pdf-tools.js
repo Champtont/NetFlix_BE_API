@@ -12,16 +12,19 @@ export const getPDFReadableStream = (mediaArray) => {
 
   const printer = new PdfPrinter(fonts);
 
-  const content = mediaArray.map((media) => {
-    return [
-      { text: media.title, style: "header" },
-      { text: media.category, style: "subheader" },
-      "\n\n",
-    ];
-  });
+  /*   const content = mediaArray.map((media) => {
+      return [
+        { text: media.title, style: "header" },
+        { text: media.category, style: "subheader" },
+        "\n\n",
+      ];
+    });*/
 
   const docDefinition = {
-    content: [...content],
+    content: [
+      { text: mediaArray.title, style: "header" },
+      { text: mediaArray.year },
+    ],
   };
 
   const pdfReadableStream = printer.createPdfKitDocument(docDefinition);

@@ -24,7 +24,7 @@ filesRouter.post("/:id/poster", cloudinaryUploader, async (req, res, next) => {
     const url = req.file.path;
     const allMedia = await getMedia();
 
-    const index = allMedia.findIndex((media) => media.id === req.params.id);
+    const index = allMedia.findIndex((media) => media.imdbId === req.params.id);
     if (index !== -1) {
       const oldMedia = allMedia[index];
       const mediaPoster = { ...oldMedia, poster: url };
@@ -45,10 +45,11 @@ filesRouter.post("/:id/poster", cloudinaryUploader, async (req, res, next) => {
 });
 
 filesRouter.get("/:id/pdf", async (req, res, next) => {
-  res.setHeader("Content-Disposition", "attachment; filename=test.pdf");
+  res.setHeader("Content-Disposition", "attachment; filename=media.pdf");
 
   const allMedia = await getMedia();
-  const source = getPDFReadableStream(allMedia);
+  const media = allMedia.find((media) => media.imdbId === req.params.id);
+  const source = getPDFReadableStream(media);
   const destination = res;
   pipeline(source, destination, (err) => {
     if (err) console.log(err);
