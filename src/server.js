@@ -3,8 +3,8 @@ import cors from "cors";
 import createHttpError from "http-errors";
 import listEndpoints from "express-list-endpoints";
 import { join } from "path";
-import filesRouter from "./src/api/files/index.js";
-import mediaRouter from "./src/api/media/index.js";
+import filesRouter from "../src/api/files/index.js";
+import mediaRouter from "./api/media/index.js";
 import {
   genericErrorHandler,
   unAuthorizedHandler,
@@ -42,10 +42,10 @@ server.use("/medias", mediaRouter);
 server.use("/medias", filesRouter);
 
 //Error handlers
-/*server.use(notFoundHandler);
+server.use(notFoundHandler);
 server.use(unAuthorizedHandler);
 server.use(badRequestHandler);
-server.use(genericErrorHandler);*/
+server.use(genericErrorHandler);
 
 //
 server.listen(port, () => {
